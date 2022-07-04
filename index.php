@@ -24,6 +24,6 @@
     <h4><span style="font-weight: bold;">NB :</span> Le tableur excel doit respecter le caneva suivant !</h4>
 </div>
 
-<img src="images/tableur.png" style="margin:auto; width: 100%; height: 50%;" class="mb-5" alt="">
+<img src="images/tableur-2.png" style="margin:auto; width: 100%; height: 50%;" class="mb-5" alt="">
 
 <?php require 'elements/footer.php'; ?>
