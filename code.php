@@ -6,7 +6,7 @@ require 'elements/header.php';
 ?>
 
 <div class="row">
-    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8">
+    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
         <table class="table table-bordered text-capitalise text-center">
             <thead>
                 <tr>
@@ -30,7 +30,12 @@ require 'elements/header.php';
             <tbody>
                 <?php foreach ($mes_comptes as $key => $single_compte): ?>
                     <tr>
-                        <td><?= $single_compte->numero ?></td>
+                        <?php if (in_array($single_compte->numero, array_values($comptes_mauvais_conformite)[0])): ?>
+                            <td style="padding: 0; background-color: #dc3545;"><button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 100px;" class="btn btn-danger" data-bs-toggle="popover" title="<?= array_values($comptes_mauvais_conformite)[1] ?>" data-bs-content="<?= array_values($comptes_mauvais_conformite)[2] ?>"><?= $single_compte->numero ?></button></td>
+                        <?php else: ?>
+                            <!-- style="background-color: #20c997;" -->
+                            <td><?= $single_compte->numero ?></td>
+                        <?php endif ?>
                         <td><?= strtolower($single_compte->libelle) ?></td>
                         <td><?= $single_compte->debit_ouv ?></td>
                         <td><?= $single_compte->credit_ouv ?></td>
@@ -42,49 +47,6 @@ require 'elements/header.php';
                 <?php endforeach ?>
             </tbody>
         </table>
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-        <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">STATISTIQUES</div>
-                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6"><?= '<strong class="text-center">' . count($mes_comptes) . '</strong> comptes' ?></div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="list-group">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <h5 class="text-end">Comptes</h5>
-                                <?php foreach ($comptes_mauvais as $un_compte): ?>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-danger"><?= $un_compte ?></a>
-                                <?php endforeach ?>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <h5>invalides</h5>
-                                <div class="card p-1">
-                                    <?= '<strong class="text-center">' . count($comptes_mauvais) . '</strong> <span class="text-center">comptes invalides</span>' ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <h5 class="mt-3 text-end">Comptes</h5>
-                                <?php foreach ($comptes_bons as $un_compte): ?>
-                                    <a href="#" class="list-group-item list-group-item-action list-group-item-success"><?= $un_compte ?></a>
-                                <?php endforeach ?>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <h5 class="mt-3">valides</h5>
-                                <div class="card p-1">
-                                    <?= '<strong class="text-center">' . count($comptes_bons) . '</strong> <span class="text-center">comptes valides</span>' ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

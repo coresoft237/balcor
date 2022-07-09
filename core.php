@@ -36,6 +36,13 @@ if (isset($_POST['save_excel_data'])) {
         $query = $pdo->query("SELECT * FROM plans");
         $donnees_plan = $query->fetchAll(PDO::FETCH_ASSOC);
 
+        $query = $pdo->query("SELECT * FROM tests");
+        $donnees_tests = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        // echo '<pre>';
+        // var_dump($donnees_tests);
+        // echo '</pre>';
+
         $new_donnees_balance = json_decode($donnees_balance);
 
         $comptes_bons = [];
@@ -63,10 +70,21 @@ if (isset($_POST['save_excel_data'])) {
             // echo "Le compte $all_compte est bon.";
         } else {
             // echo "Le compte $all_compte est mauvais. <br>";
+            // $comptes_mauvais["conformite"][] = $donnees_tests[0]['nom'];
             $comptes_mauvais[] = $all_compte;
         }
     }
 }
+
+$comptes_mauvais_conformite = [];
+
+$comptes_mauvais_conformite['comptes'] = array_unique($comptes_mauvais);
+$comptes_mauvais_conformite['nom'] = $donnees_tests[0]['nom'];
+$comptes_mauvais_conformite['description'] = $donnees_tests[0]['description'];
+
+// echo '<pre>';
+// var_dump($comptes_mauvais_conformite);
+// echo '</pre>';
 
 $mes_comptes = [];
 
@@ -84,5 +102,5 @@ foreach($data as $row) {
     $mes_comptes[] = new Compte($numero, $libelle, $debit_ouv, $credit_ouv, $debit_mou, $credit_mou, $debit_solde, $credit_solde);
 }
 
-$comptes_mauvais = array_unique($comptes_mauvais);
+$comptes_bons = array_unique($comptes_mauvais);
 $comptes_bons = array_unique($comptes_bons);
