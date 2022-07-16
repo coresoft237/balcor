@@ -41,7 +41,14 @@ require 'elements/header.php';
                         <td><?= $single_compte->credit_ouv ?></td>
                         <td><?= $single_compte->debit_mou ?></td>
                         <td><?= $single_compte->credit_mou ?></td>
-                        <td><?= $single_compte->debit_solde ?></td>
+
+                        <?php if (isset($single_compte->debit_solde) && in_array($single_compte->debit_solde, array_values($comptes_bons_1_complet_avec_debit_solde))): ?>
+                            <td style="padding: 0; background-color: #dc3545;"><button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 100px;" class="btn btn-danger" data-bs-toggle="popover" title="Attention" data-bs-content="Enlevez ce debit !"><?= $single_compte->debit_solde ?></button></td>
+                        <?php else: ?>
+                            <!-- style="background-color: #20c997;" -->
+                            <td><?= $single_compte->debit_solde ?></td>
+                        <?php endif ?>
+                        
                         <td><?= $single_compte->credit_solde ?></td>
                     </tr>
                 <?php endforeach ?>

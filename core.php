@@ -102,5 +102,41 @@ foreach($data as $row) {
     $mes_comptes[] = new Compte($numero, $libelle, $debit_ouv, $credit_ouv, $debit_mou, $credit_mou, $debit_solde, $credit_solde);
 }
 
-$comptes_bons = array_unique($comptes_mauvais);
+$comptes_mauvais = array_unique($comptes_mauvais);
 $comptes_bons = array_unique($comptes_bons);
+
+
+$comptes_bons_1 = [];
+$comptes_bons_1_complet_avec_debit_solde = [];
+
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '1') {
+        $comptes_bons_1[] = $compte_bon;
+    }
+}
+
+foreach ($mes_comptes as $mon_compte) {
+    // echo '<pre>';
+    // var_dump($mon_compte->numero);
+    // echo '</pre>';
+    foreach ($comptes_bons_1 as $compte_bon_1) {
+        // echo '<pre>';
+        // var_dump($comptes_bons_1);
+        // echo '</pre>';
+        
+        if (($mon_compte->numero == $compte_bon_1) && !empty($mon_compte->debit_solde)) {
+            $comptes_bons_1_complet_avec_debit_solde[] = $mon_compte->debit_solde;
+            // $comptes_bons_1_complet_avec_debit_solde['debit'] = $mon_compte->debit_solde;
+            // $comptes_bons_1_complet_avec_debit_solde['credit'] = $mon_compte->credit_solde;
+        }
+    }
+}
+
+// echo '<pre>';
+// var_dump(array_values($comptes_bons_1_complet_avec_debit_solde));
+// echo '</pre>';
+
+// echo '<pre>';
+// var_dump($mes_comptes[0]->debit_solde);
+// echo '</pre>';
