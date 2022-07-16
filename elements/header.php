@@ -26,6 +26,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/tests/index.php">Tests</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/plans/index.php">Plans</a>
+          </li>
       </div>
     </div>
   </nav>
