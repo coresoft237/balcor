@@ -25,7 +25,17 @@
           </li>
         </ul>
         <div class="d-flex">
-          <a class="nav-link text-light" aria-current="page" href="/admin/admin.php">Administration</a>
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link text-light" aria-current="page" href="/auth/login.php">se connecter</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" aria-current="page" href="/auth/register.php">s'inscrire</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" aria-current="page" href="/admin/admin.php">Administration</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
