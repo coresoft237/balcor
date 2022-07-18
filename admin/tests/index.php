@@ -12,7 +12,7 @@ try {
   $error = $e->getMessage();
 }
 
-require '../elements/header.php';
+require '../../elements/admin/admin_header.php';
 ?>
 
 <?php if ($error): ?>
@@ -20,7 +20,7 @@ require '../elements/header.php';
 <?php else: ?>
 
 <p>
-  <a class="btn btn-success" href="/tests/add.php">Ajouter un test</a>
+  <a class="btn btn-success" href="/admin/tests/add.php">Ajouter un test</a>
 </p>
 <table class="table">
   <thead>
@@ -38,8 +38,8 @@ require '../elements/header.php';
             <td><?= htmlentities($test->nom) ?></td>
             <td><?= htmlentities($test->description) ?></td>
             <td>
-              <a class="btn btn-primary" href="/tests/edit.php?id=<?= $test->id ?>"><i class="fas fa-pen-to-square"></i></a>
-              <a class="btn btn-danger" href="/tests/delete.php?id=<?= $test->id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce test ?')"><i class="fas fa-trash-can"></i></a>
+              <a class="btn btn-primary" href="/admin/tests/edit.php?id=<?= $test->id ?>"><i class="fas fa-pen-to-square"></i></a>
+              <a class="btn btn-danger" href="/admin/tests/delete.php?id=<?= $test->id ?>" onclick="return confirm('Voulez-vous vraiment supprimer ce test ?')"><i class="fas fa-trash-can"></i></a>
             </td>
         </tr>
     <?php endforeach ?>
@@ -47,4 +47,4 @@ require '../elements/header.php';
 </table>
 <?php endif ?>
 
-<?php require '../elements/footer.php'; ?>
+<?php require '../../elements/admin/admin_footer.php'; ?>

@@ -5,12 +5,12 @@ $pdo = new PDO('mysql:dbname=plan;host=127.0.0.1', 'root', '', [
 ]);
 
 try {
-    $query = $pdo->prepare('DELETE FROM tests WHERE id = :id');
+    $query = $pdo->prepare('DELETE FROM plans WHERE id = :id');
     $query->execute([
         'id' => $_GET['id']
     ]);
 
-    header('Location: /tests/index.php');
+    header('Location: /admin/plans/index.php');
 } catch (PDOException $e) {
     $error = $e->getMessage();
 }

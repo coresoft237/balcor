@@ -14,17 +14,17 @@ try {
             'description' => $_POST['description']
         ]);
 
-        header('Location: /tests/index.php');
+        header('Location: /admin/tests/index.php');
     }
 } catch (PDOException $e) {
     $error = $e->getMessage();
 }
 
-require '../elements/header.php';
+require '../../elements/admin/admin_header.php';
 ?>
 
 <p>
-    <a class="btn btn-info" href="/tests/index.php">Liste des tests</a>
+    <a class="btn btn-info" href="/admin/tests/index.php">Liste des tests</a>
 </p>
 
 <?php if ($error): ?>
@@ -55,4 +55,4 @@ require '../elements/header.php';
     </div>
 <?php endif ?>
 
-<?php require '../elements/footer.php'; ?>
+<?php require '../../elements/admin/admin_footer.php'; ?>
