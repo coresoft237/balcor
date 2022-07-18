@@ -23,6 +23,10 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/index.php">Accueil</a>
           </li>
+        </ul>
+        <div class="d-flex">
+          <a class="nav-link text-light" aria-current="page" href="/admin/admin.php">Administration</a>
+        </div>
       </div>
     </div>
   </nav>
