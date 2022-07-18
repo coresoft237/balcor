@@ -1,4 +1,10 @@
-<?php require 'functions.php' ?>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
+
+require 'functions.php'
+?>
 
 <!doctype html>
 <html lang="en">
@@ -28,15 +34,21 @@
         </ul>
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link text-light" aria-current="page" href="/auth/login.php">se connecter</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" aria-current="page" href="/auth/register.php">s'inscrire</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-light" aria-current="page" href="/admin/admin.php">Administration</a>
-            </li>
+            <?php if(isset($_SESSION['auth'])): ?>
+              <li class="nav-item">
+                <a class="nav-link text-light" aria-current="page" href="/auth/logout.php">Se deconnecter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" aria-current="page" href="/admin/admin.php">Administration</a>
+              </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link text-light" aria-current="page" href="/auth/login.php">se connecter</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-light" aria-current="page" href="/auth/register.php">s'inscrire</a>
+              </li>
+            <?php endif ?>
           </ul>
         </div>
       </div>
@@ -44,3 +56,11 @@
   </nav>
 
   <div class="container">
+    <?php if(isset($_SESSION['flash'])): ?>
+      <?php foreach($_SESSION['flash'] as $type => $message): ?>
+        <div class="alert alert-<?= $type ?>">
+          <?= $message ?>
+        </div>
+      <?php endforeach ?>
+      <?php unset($_SESSION['flash']) ?>
+    <?php endif ?>

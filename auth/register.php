@@ -1,6 +1,8 @@
 <?php
 
- require '../elements/header.php'; ?>
+ require '../elements/header.php';
+//  session_start();
+ ?>
 
 <?php
 
@@ -57,7 +59,7 @@
                 $user_id = $pdo->lastInsertId();
 
                 //Server settings
-                $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
                 $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -90,6 +92,7 @@
                 $mail->send();
 
                 // mail($_POST['email'], "Confirmation de votre compte", "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost:8000/auth/confirm.php?id=$user_id&token=$token");
+                $_SESSION['flash']['success'] = "Un email de confirmation vous a ete envoye pour valider votre compte.";
                 header('Location: /auth/login.php');
                 exit();
                 // echo 'Message has been sent';
