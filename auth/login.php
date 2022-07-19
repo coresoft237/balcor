@@ -1,5 +1,10 @@
-<?php require '../elements/header.php'; ?>
 <?php
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+      }
+      
+      require '../elements/functions.php';
+
     if (!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password'])) {
         require_once '../elements/db.php';
 
@@ -19,6 +24,7 @@
         }
     }
 ?>
+<?php require '../elements/header.php'; ?>
 
 <div class="container">
     <div class="row mb-5">

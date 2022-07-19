@@ -1,4 +1,10 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  require '../elements/functions.php';
+
 $user_id = $_GET['id'];
 $token = $_GET['token'];
 

@@ -3,7 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 
-require 'functions.php'
+// require 'functions.php';
 ?>
 
 <!doctype html>

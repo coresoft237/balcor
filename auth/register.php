@@ -1,10 +1,9 @@
 <?php
-
- require '../elements/header.php';
-//  session_start();
- ?>
-
-<?php
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+      }
+      
+      require '../elements/functions.php';
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -107,6 +106,9 @@
         }
     }
 ?>
+
+<?php require '../elements/header.php'; ?>
+
 
 <div class="container">
     <div class="row mb-5">
