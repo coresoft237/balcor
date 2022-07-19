@@ -22,10 +22,11 @@ require '../elements/header.php';
 ?>
 
 <div class="container">
-    <h1>Bonjour <?= $_SESSION['auth']->username ?></h1>
-
     <div class="row mb-5">
-        <div class="col-md-6 mt-4 mx-auto">
+        <div class="col-md-6">
+            <h1>Bonjour <?= $_SESSION['auth']->username ?></h1>
+        </div>
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h4>Changer de mot de passe</h4>
