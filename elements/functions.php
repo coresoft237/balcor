@@ -16,3 +16,27 @@ function logged_only() {
         exit();
     }
 }
+
+function reconnect_from_cookie() {
+    if (isset($_COOKIE['remember']) && !isset($_SESSION['auth'])) {
+        require_once '../elements/db.php';
+        $remember_token = $_COOKIE['remember'];
+        $parts = explode('==', $remember_token);
+        $user_id = $parts[0];
+        $query = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+        $query->execute([$user_id]);
+        $user = $query->fetch();
+
+        if ($user) {
+            $expected = $user_id . '==' . $user->remember_token . sha1($user_id . 'ratonlaveurs');
+            if ($expected == $remember_token) {
+                $_SESSION['auth'] = $user;
+                setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 7);
+            } else {
+                setcookie('remember', null, -1);
+            }
+        } else {
+            setcookie('remember', null, -1);
+        }
+    }
+}

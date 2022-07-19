@@ -1,9 +1,16 @@
 <?php
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
-      }
+    }
       
-      require '../elements/functions.php';
+    require '../elements/functions.php';
+
+    reconnect_from_cookie();
+
+    if (isset($_SESSION['auth'])) {
+        header('Location: account.php');
+        exit();
+    }
 
     if (!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password'])) {
         require_once '../elements/db.php';
@@ -17,6 +24,14 @@
         if (password_verify($_POST['password'], $user->password)) {
             $_SESSION['auth'] = $user;
             $_SESSION['flash']['success'] = 'Vous etes maintenant connecte !';
+
+
+            if ($_POST['remember']) {
+                $remember_token = str_random(250);
+                $query = $pdo->prepare('UPDATE users SET remember_token = ? WHERE id = ?');
+                $query->execute([$remember_token, $user->id]);
+                setcookie('remember', $user->id . '==' . $remember_token . sha1($user->id . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
+            }
             header('Location: account.php');
             exit();
         } else {
@@ -45,7 +60,7 @@
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
                         <div class="form-group ml-4 my-2">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember" value="1">
                             <label class="form-check-label" for="remember">Se souvenir de moi</label>
                         </div>
                         <div class="form-group my-2">
