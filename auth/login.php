@@ -1,4 +1,24 @@
 <?php require '../elements/header.php'; ?>
+<?php
+    if (!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password'])) {
+        require_once '../elements/db.php';
+
+        $query = $pdo->prepare('SELECT * FROM users WHERE email = :email AND confirmed_at IS NOT NULL');
+        $query->execute([
+            'email' => $_POST['email']
+        ]);
+        $user = $query->fetch();
+
+        if (password_verify($_POST['password'], $user->password)) {
+            $_SESSION['auth'] = $user;
+            $_SESSION['flash']['success'] = 'Vous etes maintenant connecte !';
+            header('Location: account.php');
+            exit();
+        } else {
+            $_SESSION['flash']['danger'] = 'Email ou mot de passe incorrect !';
+        }
+    }
+?>
 
 <div class="container">
     <div class="row mb-5">
