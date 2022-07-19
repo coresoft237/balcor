@@ -26,6 +26,14 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/admin/plans/index.php">Plans</a>
           </li>
+        </ul>
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link text-light" aria-current="page" href="/index.php">Acceuil</a>
+              </li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>

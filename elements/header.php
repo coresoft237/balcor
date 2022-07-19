@@ -36,7 +36,7 @@ if (session_status() == PHP_SESSION_NONE) {
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <?php if(isset($_SESSION['auth'])): ?>
               <li class="nav-item">
-                <a class="nav-link text-light" aria-current="page" href="/auth/logout.php">Se deconnecter</a>
+                <a class="nav-link text-light" aria-current="page" href="/auth/logout.php"><?= $_SESSION['auth']->username ?> / Se deconnecter</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-light" aria-current="page" href="/admin/admin.php">Administration</a>

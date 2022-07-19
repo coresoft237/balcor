@@ -44,7 +44,17 @@
                             <label for="password" class="form-label">Mot de passe</label>
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
+                        <div class="form-group ml-4 my-2">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                            <label class="form-check-label" for="remember">Se souvenir de moi</label>
+                        </div>
+                        <div class="form-group my-2">
+                            <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+                        </div>
+                        <div class="d-flex justify-content-between align-content-center">
+                            <a class="btn btn-link" href="/auth/remember.php">Mot de passe oublié !</a>
+                            <a href="/auth/register.php" class="text-dark font-weight-bold">Créer un compte !</a>
+                        </div>
                     </form>
                 </div>
             </div>
