@@ -248,6 +248,25 @@ foreach ($comptes_bons_1_sauf_109 as $key => $value) {
 }
 
 /**
+ * Les comptes qui commencent par 7 sauf 73
+ */
+
+$comptes_bons_7_sauf_73 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '7') {
+        $comptes_bons_7_sauf_73[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_7_sauf_73 as $key => $value) {
+    if (strval(substr($value, 0, 2)) === '73') {
+        unset($comptes_bons_7_sauf_73[$key]);
+    }
+}
+
+/**
  * Les comptes qui commencent par 28, 29, 39
  */
 
@@ -299,7 +318,32 @@ foreach ($comptes_bons_8_plus_chiffre_impair as $key => $value) {
     }
 }
 
-$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair, $comptes_bons_585, $comptes_bons_1_sauf_109);
+/**
+ * Les comptes qui commencent par 8 et 8 + chiffre pair
+ */
+
+$comptes_bons_8_plus_chiffre_pair = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '8') {
+        $comptes_bons_8_plus_chiffre_pair[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_8_plus_chiffre_pair as $key => $value) {
+    if (
+        strval(substr($value, 0, 2)) === '81' ||
+        strval(substr($value, 0, 2)) === '83' ||
+        strval(substr($value, 0, 2)) === '85' ||
+        strval(substr($value, 0, 2)) === '87' ||
+        strval(substr($value, 0, 2)) === '89'
+    ) {
+        unset($comptes_bons_8_plus_chiffre_pair[$key]);
+    }
+}
+
+$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair, $comptes_bons_585, $comptes_bons_1_sauf_109, $comptes_bons_7_sauf_73, $comptes_bons_8_plus_chiffre_pair);
 
 foreach ($mes_comptes as $mon_compte) {
     foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
