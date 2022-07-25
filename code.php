@@ -37,7 +37,13 @@ require 'elements/header.php';
                             <td><?= $single_compte->numero ?></td>
                         <?php endif ?>
                         <td><?= strtolower($single_compte->libelle) ?></td>
-                        <td><?= $single_compte->debit_ouv ?></td>
+
+                        <?php if (isset($single_compte->debit_ouv) && in_array($single_compte->debit_ouv, array_values($comptes_bons_6_sauf_603)) && in_array($single_compte->debit_ouv, array_values($comptes_complet_pas_debit_ouv))): ?>
+                            <td style="padding: 0; background-color: #dc3545;"><button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 100px;" class="btn btn-danger" data-bs-toggle="popover" title="Attention" data-bs-content="Enlevez ce credit !"><?= $single_compte->debit_ouv ?></button></td>
+                        <?php else: ?>
+                            <!-- style="background-color: #20c997;" -->
+                            <td><?= $single_compte->debit_ouv ?></td>
+                        <?php endif ?>
                         
 
                         <?php if (isset($single_compte->credit_ouv) && in_array($single_compte->credit_ouv, array_values($comptes_complet_pas_credit_ouv))): ?>
@@ -51,7 +57,7 @@ require 'elements/header.php';
                         <td><?= $single_compte->debit_mou ?></td>
                         <td><?= $single_compte->credit_mou ?></td>
 
-                        <?php if (isset($single_compte->debit_solde) && in_array($single_compte->debit_solde, array_values($comptes_bons_1_complet_avec_debit_solde))): ?>
+                        <?php if (isset($single_compte->debit_solde) && in_array($single_compte->debit_solde, array_values($comptes_complet_pas_credit_solde))): ?>
                             <td style="padding: 0; background-color: #dc3545;"><button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 100px;" class="btn btn-danger" data-bs-toggle="popover" title="Attention" data-bs-content="Enlevez ce debit !"><?= $single_compte->debit_solde ?></button></td>
                         <?php else: ?>
                             <!-- style="background-color: #20c997;" -->

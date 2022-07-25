@@ -208,10 +208,84 @@ foreach ($mes_comptes as $mon_compte) {
     }
 }
 
-// $comptes_complet_pas_credit_ouv_et_credit_solde = array_unique(array_merge($comptes_complet_pas_credit_ouv, $comptes_complet_pas_credit_solde));
+
+/**
+ * Les comptes qui commencent par 6 et 2 sauf 603
+ */
+
+$comptes_bons_6_sauf_603 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '6') {
+        $comptes_bons_6_sauf_603[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_6_sauf_603 as $key => $value) {
+    if (strval(substr($value, 0, 3)) === '603') {
+        unset($comptes_bons_6_sauf_603[$key]);
+    }
+}
+
+/**
+ * Les comptes qui commencent par 8 et 8 + chiffre impaire
+ */
+
+$comptes_bons_8_plus_chiffre_impair = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '8') {
+        $comptes_bons_8_plus_chiffre_impair[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_8_plus_chiffre_impair as $key => $value) {
+    if (
+        strval(substr($value, 0, 2)) === '82' ||
+        strval(substr($value, 0, 2)) === '84' ||
+        strval(substr($value, 0, 2)) === '86' ||
+        strval(substr($value, 0, 2)) === '88'
+    ) {
+        unset($comptes_bons_8_plus_chiffre_impair[$key]);
+    }
+}
+
+$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair);
+
+$comptes_complet_pas_credit_ouv = [];
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
+        if (($mon_compte->numero == $compte_pas_debit_ouv_credit_ouv_et_credit_solde) && !empty($mon_compte->credit_ouv)) {
+            $comptes_complet_pas_credit_ouv[] = $mon_compte->credit_ouv;
+        }
+    }
+}
+
+$comptes_complet_pas_credit_solde = [];
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
+        if (($mon_compte->numero == $compte_pas_debit_ouv_credit_ouv_et_credit_solde) && !empty($mon_compte->credit_solde)) {
+            $comptes_complet_pas_credit_solde[] = $mon_compte->credit_solde;
+        }
+    }
+}
+
+$comptes_complet_pas_debit_ouv = [];
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
+        if (($mon_compte->numero == $compte_pas_debit_ouv_credit_ouv_et_credit_solde) && !empty($mon_compte->debit_ouv)) {
+            $comptes_complet_pas_debit_ouv[] = $mon_compte->debit_ouv;
+        }
+    }
+}
 
 // echo '<pre>';
-// var_dump($comptes_complet_pas_credit_ouv_et_credit_solde);
+// var_dump($comptes_bons_8_plus_chiffre_impair);
 // echo '</pre>';
 // exit();
 
