@@ -181,7 +181,7 @@ foreach ($comptes_bons as $compte_bon) {
 $comptes_bons_55_et_57 = [];
 
 foreach ($comptes_bons as $compte_bon) {
-    if (strval(substr($compte_bon, 0, 2)) === '55' || strval(substr($compte_bon, 0, 2)) === '57') {
+    if (strval(substr($compte_bon, 0, 2)) === '55' || strval(substr($compte_bon, 0, 2)) === '57' || strval(substr($compte_bon, 0, 3)) === '585') {
         $comptes_bons_55_et_57[] = $compte_bon;
     }
 }
@@ -229,6 +229,18 @@ foreach ($comptes_bons_6_sauf_603 as $key => $value) {
 }
 
 /**
+ * Les comptes qui commencent par 585
+ */
+
+$comptes_bons_585 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 3)) === '585') {
+        $comptes_bons_585[] = $compte_bon;
+    }
+}
+
+/**
  * Les comptes qui commencent par 8 et 8 + chiffre impaire
  */
 
@@ -252,9 +264,7 @@ foreach ($comptes_bons_8_plus_chiffre_impair as $key => $value) {
     }
 }
 
-$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair);
-
-$comptes_complet_pas_credit_ouv = [];
+$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair, $comptes_bons_585);
 
 foreach ($mes_comptes as $mon_compte) {
     foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
@@ -263,8 +273,6 @@ foreach ($mes_comptes as $mon_compte) {
         }
     }
 }
-
-$comptes_complet_pas_credit_solde = [];
 
 foreach ($mes_comptes as $mon_compte) {
     foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
@@ -283,6 +291,17 @@ foreach ($mes_comptes as $mon_compte) {
         }
     }
 }
+
+$comptes_complet_pas_debit_solde = [];
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
+        if (($mon_compte->numero == $compte_pas_debit_ouv_credit_ouv_et_credit_solde) && !empty($mon_compte->debit_solde)) {
+            $comptes_complet_pas_debit_solde[] = $mon_compte->debit_solde;
+        }
+    }
+}
+
 
 // echo '<pre>';
 // var_dump($comptes_bons_8_plus_chiffre_impair);
