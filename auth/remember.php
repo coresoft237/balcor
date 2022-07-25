@@ -60,7 +60,7 @@
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = 'Reinitialisation de votre mot de passe';
-                $mail->Body    = "Afin de reinitialiser votre mot de passe, merci de cliquer sur ce lien\n\nhttp://localhost:8000/auth/confirm.php?id={$user->id}&token=$reset_token<b>in bold!</b>";
+                $mail->Body    = "Afin de reinitialiser votre mot de passe, merci de cliquer sur ce lien\n\nhttp://localhost:8000/auth/reset.php?id={$user->id}&token=$reset_token<b>in bold!</b>";
 
                 $mail->send();
 

@@ -109,6 +109,9 @@ $comptes_bons = array_unique($comptes_bons);
 $comptes_bons_1 = [];
 $comptes_bons_1_complet_avec_debit_solde = [];
 
+/**
+ * Les comptes qui commencent par 1
+ */
 
 foreach ($comptes_bons as $compte_bon) {
     if (strval(substr($compte_bon, 0, 1)) === '1') {
@@ -117,26 +120,99 @@ foreach ($comptes_bons as $compte_bon) {
 }
 
 foreach ($mes_comptes as $mon_compte) {
-    // echo '<pre>';
-    // var_dump($mon_compte->numero);
-    // echo '</pre>';
     foreach ($comptes_bons_1 as $compte_bon_1) {
-        // echo '<pre>';
-        // var_dump($comptes_bons_1);
-        // echo '</pre>';
-        
         if (($mon_compte->numero == $compte_bon_1) && !empty($mon_compte->debit_solde)) {
             $comptes_bons_1_complet_avec_debit_solde[] = $mon_compte->debit_solde;
-            // $comptes_bons_1_complet_avec_debit_solde['debit'] = $mon_compte->debit_solde;
-            // $comptes_bons_1_complet_avec_debit_solde['credit'] = $mon_compte->credit_solde;
         }
     }
 }
 
-// echo '<pre>';
-// var_dump(array_values($comptes_bons_1_complet_avec_debit_solde));
-// echo '</pre>';
+/**
+ * Les comptes qui commencent par 109 et 2 sauf 28 et 29
+ */
+
+$comptes_bons_109_et_2 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 3)) === '109' OR strval(substr($compte_bon, 0, 1)) === '2') {
+        $comptes_bons_109_et_2[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_109_et_2 as $key => $value) {
+    if (strval(substr($value, 0, 2)) === '28' || strval(substr($value, 0, 2)) === '29') {
+        unset($comptes_bons_109_et_2[$key]);
+    }
+}
+
+/**
+ * Les comptes qui commencent par 3 sauf 39
+ */
+
+$comptes_bons_3_sauf_39 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '3') {
+        $comptes_bons_3_sauf_39[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_3_sauf_39 as $key => $value) {
+    if (strval(substr($value, 0, 2)) === '39') {
+        unset($comptes_bons_3_sauf_39[$key]);
+    }
+}
+
+/**
+ * Les comptes qui commencent par 409 et 411
+ */
+
+$comptes_bons_409_et_411 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 3)) === '409' || strval(substr($compte_bon, 0, 3)) === '411') {
+        $comptes_bons_409_et_411[] = $compte_bon;
+    }
+}
+
+
+$comptes_bons_55_et_57 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 2)) === '55' || strval(substr($compte_bon, 0, 2)) === '57') {
+        $comptes_bons_55_et_57[] = $compte_bon;
+    }
+}
+
+$comptes_pas_credit_ouv_et_credit_solde = array_merge($comptes_bons_109_et_2, $comptes_bons_3_sauf_39, $comptes_bons_409_et_411, $comptes_bons_55_et_57);
+
+$comptes_complet_pas_credit_ouv = [];
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_pas_credit_ouv_et_credit_solde as $compte_pas_credit_ouv_et_credit_solde) {
+        if (($mon_compte->numero == $compte_pas_credit_ouv_et_credit_solde) && !empty($mon_compte->credit_ouv)) {
+            $comptes_complet_pas_credit_ouv[] = $mon_compte->credit_ouv;
+        }
+    }
+}
+
+$comptes_complet_pas_credit_solde = [];
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_pas_credit_ouv_et_credit_solde as $compte_pas_credit_ouv_et_credit_solde) {
+        if (($mon_compte->numero == $compte_pas_credit_ouv_et_credit_solde) && !empty($mon_compte->credit_solde)) {
+            $comptes_complet_pas_credit_solde[] = $mon_compte->credit_solde;
+        }
+    }
+}
+
+// $comptes_complet_pas_credit_ouv_et_credit_solde = array_unique(array_merge($comptes_complet_pas_credit_ouv, $comptes_complet_pas_credit_solde));
 
 // echo '<pre>';
-// var_dump($mes_comptes[0]->debit_solde);
+// var_dump($comptes_complet_pas_credit_ouv_et_credit_solde);
 // echo '</pre>';
+// exit();
+
+

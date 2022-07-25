@@ -38,7 +38,16 @@ require 'elements/header.php';
                         <?php endif ?>
                         <td><?= strtolower($single_compte->libelle) ?></td>
                         <td><?= $single_compte->debit_ouv ?></td>
-                        <td><?= $single_compte->credit_ouv ?></td>
+                        
+
+                        <?php if (isset($single_compte->credit_ouv) && in_array($single_compte->credit_ouv, array_values($comptes_complet_pas_credit_ouv))): ?>
+                            <td style="padding: 0; background-color: #dc3545;"><button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 100px;" class="btn btn-danger" data-bs-toggle="popover" title="Attention" data-bs-content="Enlevez ce credit !"><?= $single_compte->credit_ouv ?></button></td>
+                        <?php else: ?>
+                            <!-- style="background-color: #20c997;" -->
+                            <td><?= $single_compte->credit_ouv ?></td>
+                        <?php endif ?>
+
+
                         <td><?= $single_compte->debit_mou ?></td>
                         <td><?= $single_compte->credit_mou ?></td>
 
@@ -49,7 +58,12 @@ require 'elements/header.php';
                             <td><?= $single_compte->debit_solde ?></td>
                         <?php endif ?>
                         
-                        <td><?= $single_compte->credit_solde ?></td>
+                        <?php if (isset($single_compte->credit_solde) && in_array($single_compte->credit_solde, array_values($comptes_complet_pas_credit_solde))): ?>
+                            <td style="padding: 0; background-color: #dc3545;"><button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 100px;" class="btn btn-danger" data-bs-toggle="popover" title="Attention" data-bs-content="Enlevez ce credit !"><?= $single_compte->credit_solde ?></button></td>
+                        <?php else: ?>
+                            <!-- style="background-color: #20c997;" -->
+                            <td><?= $single_compte->credit_solde ?></td>
+                        <?php endif ?>
                     </tr>
                 <?php endforeach ?>
             </tbody>
