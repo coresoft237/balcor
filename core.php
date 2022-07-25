@@ -229,6 +229,41 @@ foreach ($comptes_bons_6_sauf_603 as $key => $value) {
 }
 
 /**
+ * Les comptes qui commencent par 1 sauf 109
+ */
+
+$comptes_bons_1_sauf_109 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (strval(substr($compte_bon, 0, 1)) === '1') {
+        $comptes_bons_1_sauf_109[] = $compte_bon;
+    }
+}
+
+
+foreach ($comptes_bons_1_sauf_109 as $key => $value) {
+    if (strval(substr($value, 0, 3)) === '109') {
+        unset($comptes_bons_1_sauf_109[$key]);
+    }
+}
+
+/**
+ * Les comptes qui commencent par 28, 29, 39
+ */
+
+$comptes_bons_28_29_39 = [];
+
+foreach ($comptes_bons as $compte_bon) {
+    if (
+        strval(substr($compte_bon, 0, 2)) === '28' ||
+        strval(substr($compte_bon, 0, 2)) === '29' ||
+        strval(substr($compte_bon, 0, 2)) === '39'
+    ) {
+        $comptes_bons_28_29_39[] = $compte_bon;
+    }
+}
+
+/**
  * Les comptes qui commencent par 585
  */
 
@@ -264,7 +299,7 @@ foreach ($comptes_bons_8_plus_chiffre_impair as $key => $value) {
     }
 }
 
-$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair, $comptes_bons_585);
+$comptes_pas_debit_ouv_credit_ouv_et_credit_solde = array_merge($comptes_bons_6_sauf_603, $comptes_bons_8_plus_chiffre_impair, $comptes_bons_585, $comptes_bons_1_sauf_109);
 
 foreach ($mes_comptes as $mon_compte) {
     foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
@@ -292,11 +327,27 @@ foreach ($mes_comptes as $mon_compte) {
     }
 }
 
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_bons_28_29_39 as $compte_bon_28_29_39) {
+        if (($mon_compte->numero == $compte_bon_28_29_39) && !empty($mon_compte->debit_ouv)) {
+            $comptes_complet_pas_debit_ouv[] = $mon_compte->debit_ouv;
+        }
+    }
+}
+
 $comptes_complet_pas_debit_solde = [];
 
 foreach ($mes_comptes as $mon_compte) {
     foreach ($comptes_pas_debit_ouv_credit_ouv_et_credit_solde as $compte_pas_debit_ouv_credit_ouv_et_credit_solde) {
         if (($mon_compte->numero == $compte_pas_debit_ouv_credit_ouv_et_credit_solde) && !empty($mon_compte->debit_solde)) {
+            $comptes_complet_pas_debit_solde[] = $mon_compte->debit_solde;
+        }
+    }
+}
+
+foreach ($mes_comptes as $mon_compte) {
+    foreach ($comptes_bons_28_29_39 as $compte_bon_28_29_39) {
+        if (($mon_compte->numero == $compte_bon_28_29_39) && !empty($mon_compte->debit_solde)) {
             $comptes_complet_pas_debit_solde[] = $mon_compte->debit_solde;
         }
     }
