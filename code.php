@@ -86,13 +86,17 @@ require 'elements/header.php';
                     <?php foreach($comptes_complet_debit_mou as $compte_complet_debit_mou): ?>
                         <?php foreach($comptes_complet_credit_mou as $compte_complet_credit_mou): ?>
                             <?php if($compte_complet_debit_mou === $compte_complet_credit_mou): ?>
+                                <button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 250px;" class="btn btn-success" data-bs-toggle="popover" title="Conformite amortissements" data-bs-content="Ce compte 68 a un mouvement debit egal au mouvement credit du compte 28">
                                     <li class="list-group-item bg-success text-white">
                                         <?= $compte_complet_debit_mou ?> est <?= ' = a ' ?> <?= $compte_complet_credit_mou ?>
                                     </li>
+                                </button>
                             <?php else: ?>
+                                <button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 250px;" class="btn btn-danger" data-bs-toggle="popover" title="Conformite amortissements" data-bs-content="Ce compte 68 a un mouvement debit different du mouvement credit du compte 28">
                                     <li class="list-group-item bg-danger text-white">
                                         <?= $compte_complet_debit_mou ?> est <?= ' != de ' ?> <?= $compte_complet_credit_mou ?>
                                     </li>
+                                </button>
                             <?php endif ?>
                         <?php endforeach ?>
                     <?php endforeach ?>
@@ -109,13 +113,17 @@ require 'elements/header.php';
                     <?php foreach($comptes_complet_debit_mou_69 as $compte_complet_debit_mou): ?>
                         <?php foreach($comptes_complet_credit_mou_29 as $compte_complet_credit_mou): ?>
                             <?php if($compte_complet_debit_mou === $compte_complet_credit_mou): ?>
+                                <button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 250px;" class="btn btn-success" data-bs-toggle="popover" title="Conformite provisions" data-bs-content="Ce compte 69 a un mouvement debit egal au mouvement credit du compte 29">
                                     <li class="list-group-item bg-success text-white">
                                         <?= $compte_complet_debit_mou ?> est <?= ' = a ' ?> <?= $compte_complet_credit_mou ?>
                                     </li>
+                                </button>
                             <?php else: ?>
+                                <button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 250px;" class="btn btn-danger" data-bs-toggle="popover" title="Conformite provisions" data-bs-content="Ce compte 69 a un mouvement debit different du mouvement credit du compte 29">
                                     <li class="list-group-item bg-danger text-white">
                                         <?= $compte_complet_debit_mou ?> est <?= ' != de ' ?> <?= $compte_complet_credit_mou ?>
                                     </li>
+                                </button>
                             <?php endif ?>
                         <?php endforeach ?>
                     <?php endforeach ?>
@@ -131,13 +139,17 @@ require 'elements/header.php';
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <?php if(array_sum($comptes_complet_debit_solde) >= array_sum($comptes_complet_credit_solde)): ?>
-                        <li class="list-group-item bg-success text-white">
-                            <?= array_sum($comptes_complet_debit_solde) ?> est <?= ' >= a ' ?> <?= array_sum($comptes_complet_credit_solde) ?>
-                        </li>
+                        <button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 250px;" class="btn btn-success" data-bs-toggle="popover" title="Conformite VNC" data-bs-content="Le cumul de comptes 211 a 218, 241 a 248 etc... egal au cumul des compte 29">
+                            <li class="list-group-item bg-success text-white">
+                                <?= array_sum($comptes_complet_debit_solde) ?> est <?= ' >= a ' ?> <?= array_sum($comptes_complet_credit_solde) ?>
+                            </li>
+                        </button>
                     <?php else: ?>
-                        <li class="list-group-item bg-danger text-white">
-                            <?= array_sum($comptes_complet_debit_solde) ?> est <?= ' <= a ' ?> <?= array_sum($comptes_complet_credit_solde) ?>
-                        </li>
+                        <button type="button" style="border: 0; border-radius: 0; margin: 0;  width: 250px;" class="btn btn-danger" data-bs-toggle="popover" title="Conformite VNC" data-bs-content="Le cumul de comptes 211 a 218, 241 a 248 etc... est different du cumul des compte 29">
+                            <li class="list-group-item bg-danger text-white">
+                                <?= array_sum($comptes_complet_debit_solde) ?> est <?= ' <= a ' ?> <?= array_sum($comptes_complet_credit_solde) ?>
+                            </li>
+                        </button>
                     <?php endif ?>
                 </ul>
             </div>
